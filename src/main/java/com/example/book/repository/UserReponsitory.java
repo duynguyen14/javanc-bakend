@@ -30,6 +30,19 @@ public class UserReponsitory {
     public User findById(Integer id) {
         return jdbcTemplate.queryForObject("select * from user where id=?", userRowMapper, id);
     }
+    public User findUser(String email, String password) {
+        String sql="select * from user where email=? and password=?";
+        return jdbcTemplate.queryForObject(sql, userRowMapper, email, password);
+    }
+    public User findByEmail(String email) {
+        try{
+            String sql="select * from user where email=?";
+            return jdbcTemplate.queryForObject(sql, userRowMapper, email);
+        }
+        catch(Exception e) {
+            return null;
+        }
+    }
     public int addUser(User user) {
         String sql="insert into user (username,password,email,phone,address,gender) values (?,?,?,?,?,?)";
         return jdbcTemplate.update(sql, user.getUserName(), user.getPassword(), user.getEmail(), user.getPhone(), user.getAddress(), user.getGender());
@@ -41,5 +54,11 @@ public class UserReponsitory {
     public int deleteUser(Integer id) {
         String sql="delete from user where id=?";
         return jdbcTemplate.update(sql, id);
+    }
+    public void saveUser(User user){
+        String sql="insert into user(email,password,username) values(?,?,?)";
+        jdbcTemplate.update(sql, user.getEmail(), user.getPassword(),user.getUserName());
+        Integer id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        user.setId(id);
     }
 }

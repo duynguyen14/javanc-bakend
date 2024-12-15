@@ -26,4 +26,11 @@ public class AccountReponsitory {
     public Account findById(Integer id) {
         return jdbcTemplate.queryForObject("select * from account where id=?", accountRowMapper, id);
     }
+    public Account findByUserId(Integer userId) {
+        return jdbcTemplate.queryForObject("select * from account where user_id=?", accountRowMapper, userId);
+    }
+    public void save(Account account) {
+        String sql = "insert into account(role,user_id) values(?,?)";
+        jdbcTemplate.update(sql, account.getRole(), account.getUserId());
+    }
 }
