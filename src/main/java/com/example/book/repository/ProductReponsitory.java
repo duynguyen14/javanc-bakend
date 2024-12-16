@@ -47,4 +47,8 @@ public class ProductReponsitory {
         String sql="delete from product where product_id=?";
         return jdbcTemplate.update(sql,id);
     }
+    public List<Product> findByCategoryId(Integer categoryId) {
+        String sql = "select * from product where category_id=?";
+        return jdbcTemplate.query(sql, productRowMapper, categoryId);
+    }
 }

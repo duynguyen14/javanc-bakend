@@ -7,6 +7,7 @@ import com.example.book.models.Account;
 import com.example.book.models.User;
 import com.example.book.repository.AccountReponsitory;
 import com.example.book.repository.UserReponsitory;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,4 +77,17 @@ public class userController {
             return new ResponseEntity<>("Registration successful",HttpStatus.CREATED);
         }
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody User user) {
+        user.setId(id);
+        int row=userReponsitory.updateUser(user);
+        if(row==1){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+//    @PatchMapping("/update/{id}")
+
 }

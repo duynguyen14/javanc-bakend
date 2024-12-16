@@ -15,7 +15,7 @@ public class CategoryReponsitory {
     }
     private final RowMapper<Category> CategoryMapper = (rs, rowNum) -> {
         Category category = new Category();
-        category.setCatalogId(rs.getInt("id"));
+        category.setCategoryid(rs.getInt("id"));
         category.setCategoryName(rs.getString("category_name"));
         category.setCatalogId(rs.getInt("catalog_id"));
         return category;
@@ -25,6 +25,10 @@ public class CategoryReponsitory {
     }
     public Category findById(Integer id) {
         return jdbcTemplate.queryForObject("select * from category where id=?", CategoryMapper, id);
+    }
+    public List<Category> findByCatalogId(Integer catalogId) {
+        String sql = "select * from category where catalog_id=?";
+        return jdbcTemplate.query(sql,new Object[]{catalogId},CategoryMapper);
     }
     public int addCategory(Category category) {
         String sql = "insert into category(category_name) values(?)";

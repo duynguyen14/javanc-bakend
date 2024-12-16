@@ -3,30 +3,30 @@ package com.example.book.models;
 //import org.springframework.data.relational.core.sql.In;
 
 public class Catalog {
-    private Integer CatalodId;
-    private String CatalodName;
+    private Integer CatalogId;
+    private String CatalogName;
 
     public Catalog() {
     }
 
-    public Catalog(Integer catalodId, String catalodName) {
-        CatalodId = catalodId;
-        CatalodName = catalodName;
+    public Catalog(Integer catalogId, String catalogName) {
+        CatalogId = catalogId;
+        CatalogName = catalogName;
     }
 
-    public Integer getCatalodId() {
-        return CatalodId;
+    public Integer getCatalogId() {
+        return CatalogId;
     }
 
-    public void setCatalodId(Integer catalodId) {
-        CatalodId = catalodId;
+    public void setCatalogId(Integer catalogId) {
+        CatalogId = catalogId;
     }
 
-    public String getCatalodName() {
-        return CatalodName;
+    public String getCatalogName() {
+        return CatalogName;
     }
 
-    public void setCatalodName(String catalodName) {
-        CatalodName = catalodName;
+    public void setCatalogName(String catalogName) {
+        CatalogName = catalogName;
     }
 }

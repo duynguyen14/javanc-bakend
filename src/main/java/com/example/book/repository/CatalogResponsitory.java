@@ -18,8 +18,8 @@ public class CatalogResponsitory {
     }
     private final RowMapper<Catalog> catalogRowMapper = (rs, rowNum) -> {
         Catalog catalog = new Catalog();
-        catalog.setCatalodId(rs.getInt("id"));
-        catalog.setCatalodName(rs.getString("catalog_name"));
+        catalog.setCatalogId(rs.getInt("id"));
+        catalog.setCatalogName(rs.getString("catalog_name"));
         return catalog;
     };
     public List<Catalog> findAll() {
@@ -31,11 +31,11 @@ public class CatalogResponsitory {
     }
     public int addCatalog(Catalog catalog) {
         String sql = "insert into catalog (catalog_name) values (?)";
-        return jdbcTemplate.update(sql, catalog.getCatalodName());
+        return jdbcTemplate.update(sql, catalog.getCatalogName());
     }
     public int updateCatalog(Catalog catalog) {
         String sql = "update catalog set catalog_name=? where id=?";
-        return jdbcTemplate.update(sql,catalog.getCatalodName(),catalog.getCatalodId());
+        return jdbcTemplate.update(sql,catalog.getCatalogName(),catalog.getCatalogId());
     }
     public int deleteCatalog(int catalogId) {
         String sql = "delete from catalog where id=?";
