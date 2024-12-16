@@ -75,18 +75,4 @@ public class cartController {
 //        }
 //    }
 
-    // Cập nhật Cart
-    @PutMapping("{id}")
-    public ResponseEntity<?> updateCart(@PathVariable Integer userID, @RequestBody Cart updatedCart) {
-        Optional<Cart> existingCart = Optional.ofNullable(cartReponsitory.findByUserId(userID));
-        if (existingCart.isPresent()) {
-            Cart cart = existingCart.get();
-            cart.setProductId(updatedCart.getProductId());
-            cart.setQuantity(updatedCart.getQuantity());
-            cartReponsitory.save(cart);
-            return new ResponseEntity<>(cart, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Không tìm thấy Cart với ID: " + userID, HttpStatus.NOT_FOUND);
-        }
-    }
 }

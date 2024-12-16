@@ -17,8 +17,6 @@ public class CartReponsitory {
     private final RowMapper<Cart> cartRowMapper = (rs, rowNum) -> {
         Cart cart = new Cart();
         cart.setCartId(rs.getInt("id"));
-        cart.setProductId(rs.getInt("product_id"));
-        cart.setQuantity(rs.getInt("quantity"));
         cart.setUserId(rs.getInt("user_id"));
         return cart;
     };
@@ -37,9 +35,5 @@ public class CartReponsitory {
     public int save(Cart cart) {
         String sql="insert into cart(user_id) values(?)";
         return jdbcTemplate.update(sql, cart.getUserId());
-    }
-    public int update(Cart cart) {
-        String sql="update cart set quantity= ? where user_id=? and id= ?";
-        return jdbcTemplate.update(sql, cart.getQuantity(), cart.getUserId(),cart.getCartId());
     }
 }
