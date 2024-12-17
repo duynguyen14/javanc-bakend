@@ -1,8 +1,10 @@
 package com.example.book.controllers;
 
 import com.example.book.DTO.BillDetailDTO;
+import com.example.book.models.Bill;
 import com.example.book.models.BillDetail;
 import com.example.book.repository.BillDetailReponsitory;
+import com.example.book.repository.BillReponsitory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,11 @@ import java.util.List;
 @CrossOrigin("*")
 public class billDetailController {
     private final BillDetailReponsitory billDetailRepository;
+    private final BillReponsitory billReponsitory;
 
-    public billDetailController(BillDetailReponsitory billDetailRepository) {
+    public billDetailController(BillDetailReponsitory billDetailRepository, BillReponsitory billReponsitory) {
         this.billDetailRepository = billDetailRepository;
+        this.billReponsitory = billReponsitory;
     }
 
     @GetMapping("")
@@ -42,13 +46,29 @@ public class billDetailController {
 //        }
 //    }
 
-    @GetMapping("/bill/{billId}")
-    public ResponseEntity<?> getBillDetailsByBillId(@PathVariable Integer billId) {
-        List<BillDetailDTO> billDetailDTOs = billDetailRepository.findByBillId(billId);
-        if (billDetailDTOs.isEmpty()) {
-            return new ResponseEntity<>("No bill details found for the given bill ID", HttpStatus.NO_CONTENT);
+    @GetMapping("/{userID}/{billId}")
+    public ResponseEntity<?> getBillDetailsByBillId(@PathVariable Integer userID,@PathVariable Integer billId) {
+        Bill bill=billReponsitory.findById(billId);
+        if (bill==null) {
+            return new ResponseEntity<>("Bill not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(billDetailDTOs, HttpStatus.OK);
+        else{
+            Integer userid=bill.getUserID();
+            if(userid==null) {
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+            else if(!userid.equals(userID)) {
+                return new ResponseEntity<>("Bạn không có quyền truy cập đơn hàng này", HttpStatus.FORBIDDEN);
+            }
+            else {
+                List<BillDetailDTO> billDetailDTOs = billDetailRepository.findByBillId(billId);
+                if (billDetailDTOs.isEmpty()) {
+                    return new ResponseEntity<>("No bill details found for the given bill ID", HttpStatus.NO_CONTENT);
+                }
+                return new ResponseEntity<>(billDetailDTOs, HttpStatus.OK);
+            }
+        }
+
     }
 
     @PostMapping("")

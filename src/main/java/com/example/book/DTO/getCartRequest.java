@@ -6,30 +6,30 @@ import com.example.book.models.Product;
 import java.util.List;
 
 public class getCartRequest {
-    private List<Product> list;
-    private List<CartDetail> listCartDetail;
+    private Product product;
+    private CartDetail cartDetail;
 
     public getCartRequest() {
     }
 
-    public getCartRequest(List<Product> list, List<CartDetail> listCartDetail) {
-        this.list = list;
-        this.listCartDetail = listCartDetail;
+    public getCartRequest(Product product, CartDetail cartDetail) {
+        this.product = product;
+        this.cartDetail = cartDetail;
     }
 
-    public List<Product> getList() {
-        return list;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setList(List<Product> list) {
-        this.list = list;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public List<CartDetail> getListCartDetail() {
-        return listCartDetail;
+    public CartDetail getCartDetail() {
+        return cartDetail;
     }
 
-    public void setListCartDetail(List<CartDetail> listCartDetail) {
-        this.listCartDetail = listCartDetail;
+    public void setCartDetail(CartDetail cartDetail) {
+        this.cartDetail = cartDetail;
     }
 }

@@ -48,26 +48,26 @@ public class cartController {
 
     // Lấy Cart theo userID
     @GetMapping("/userID/{userId}")
-    public ResponseEntity<getCartRequest> getCartByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<List> getCartByUserId(@PathVariable Integer userId) {
         Cart cart = cartReponsitory.findByUserId(userId);
-        getCartRequest CartRequest = new getCartRequest();
+        List<getCartRequest> listCartRequest = new ArrayList<>();
         if (cart == null) {
             // Tạo mới Cart nếu không tìm thấy
             Cart newCart = new Cart();
             newCart.setUserId(userId);
             cartReponsitory.save(newCart);
-            return new ResponseEntity<>(CartRequest, HttpStatus.CREATED);
+            return new ResponseEntity<>(listCartRequest, HttpStatus.CREATED);
         } else {
             List<CartDetail> listCartDetail= cartDetailReponsitory.findByCartID(cart.getCartId());
-            List< Product> productList = new ArrayList<>();
             for (CartDetail cartDetail : listCartDetail) {
                 Product product = new Product();
                 product=productReponsitory.findById(cartDetail.getProductID());
-                productList.add(product);
+                getCartRequest cartRequest = new getCartRequest();
+                cartRequest.setCartDetail(cartDetail);
+                cartRequest.setProduct(product);
+                listCartRequest.add(cartRequest);
             }
-            CartRequest.setList(productList);
-            CartRequest.setListCartDetail(listCartDetail);
-            return new ResponseEntity<>(CartRequest, HttpStatus.OK);
+            return new ResponseEntity<>(listCartRequest, HttpStatus.OK);
         }
     }
 

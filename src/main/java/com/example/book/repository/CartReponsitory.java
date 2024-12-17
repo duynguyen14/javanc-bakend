@@ -37,8 +37,14 @@ public class CartReponsitory {
             return null;  // Nếu không tìm thấy bản ghi, trả về null
         }
     }
-    public int save(Cart cart) {
+    public void save(Cart cart) {
         String sql="insert into cart(user_id) values(?)";
-        return jdbcTemplate.update(sql, cart.getUserId());
+        jdbcTemplate.update(sql, cart.getUserId());
+        Integer id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        cart.setCartId(id);
+    }
+    public int delete(Integer id) {
+        String sql="delete from cart where id=?";
+        return jdbcTemplate.update(sql, id);
     }
 }

@@ -80,9 +80,15 @@ public class cartdetailController {
     @PatchMapping("/patch/{id}")
     public ResponseEntity<String> PatchCart(@PathVariable Integer id, @RequestBody AddCartRequest addCartRequest) {
         Cart cart = cartReponsitory.findByUserId(id);
+//        System.out.println(cart.getCartId());
+//        System.out.println(id);
+//        System.out.println(addCartRequest.getProductId());
         CartDetail cartDetail= cartDetailReponsitory.findByProductIDandCartID(addCartRequest.getProductId(),cart.getCartId());
+//        System.out.println(cartDetail.getProductID());
+//        System.out.println(cartDetail.getQuantity());
+//        System.out.println(cartDetail.getCartlID());
         cartDetail.setQuantity(addCartRequest.getQuantity());
-        cartDetailReponsitory.save(cartDetail);
+        cartDetailReponsitory.updateCart(cartDetail);
         return ResponseEntity.status(HttpStatus.OK).body("Chỉnh sửa số lượng san phẩm thành công");
     }
     @DeleteMapping("/delete/{id}")

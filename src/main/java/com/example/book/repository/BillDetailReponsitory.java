@@ -37,7 +37,6 @@ public class BillDetailReponsitory {
         billDetail.setProductId(rs.getInt("product_id"));
         billDetail.setQuantity(rs.getInt("quantity"));
         billDetail.setTotal(rs.getDouble("total"));
-        billDetail.setDate(rs.getDate("doe"));
 
         Product product = new Product();
         product.setId(rs.getInt("product_id"));
@@ -70,28 +69,30 @@ public class BillDetailReponsitory {
     }
 
     public int save(BillDetail billDetail) {
-        String sql = "INSERT INTO billdetail (bill_id, product_id, quantity, total, doe) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO billdetail (bill_id, product_id, quantity, total) VALUES (?, ?, ?, ?)";
         return jdbcTemplate.update(sql,
                 billDetail.getBillId(),
                 billDetail.getProductId(),
                 billDetail.getQuantity(),
-                billDetail.getTotal(),
-                billDetail.getDate());
+                billDetail.getTotal());
     }
 
     public int update(BillDetail billDetail) {
-        String sql = "UPDATE billdetail SET bill_id = ?, product_id = ?, quantity = ?, total = ?, doe = ? WHERE billdetail_id = ?";
+        String sql = "UPDATE billdetail SET bill_id = ?, product_id = ?, quantity = ?, total = ? WHERE billdetail_id = ?";
         return jdbcTemplate.update(sql,
                 billDetail.getBillId(),
                 billDetail.getProductId(),
                 billDetail.getQuantity(),
                 billDetail.getTotal(),
-                billDetail.getDate(),
                 billDetail.getBillDetailId());
     }
 
     public int delete(int billDetailId) {
         String sql = "DELETE FROM billdetail WHERE billdetail_id = ?";
         return jdbcTemplate.update(sql, billDetailId);
+    }
+    public int deleteByBillId(Integer billId) {
+        String sql = "DELETE FROM billdetail WHERE billdetail_id = ?";
+        return jdbcTemplate.update(sql, billId);
     }
 }

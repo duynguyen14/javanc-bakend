@@ -51,6 +51,10 @@ public class CartDetailReponsitory {
         String sql= "delete from cartdetail where product_id=? and cart_id=?";
         return jdbcTemplate.update(sql, productID, cartID);
     }
+    public int deleteByCartID(Integer cartID) {
+        String sql= "delete from cartdetail where cart_id=?";
+        return jdbcTemplate.update(sql, cartID);
+    }
     public List<CartDetail> findByCartID(Integer cartID) {
         String sql = "select * from cartdetail where cart_id=?";
         return jdbcTemplate.query(sql, CartDetailRowMapper, cartID);

@@ -8,15 +8,14 @@ public class BillDetail {
     private Integer productId;
     private int quantity;
     private double total;
-    private Date date;
     public BillDetail() {}
-    public BillDetail(Integer billDetailId, Integer billId, Integer productId, int quantity, double total, Date date) {
+    public BillDetail(Integer billDetailId, Integer billId, Integer productId, int quantity, double total) {
         this.billDetailId = billDetailId;
         this.billId = billId;
         this.productId = productId;
         this.quantity = quantity;
         this.total = total;
-        this.date = date;
+
     }
 
     public Integer getBillId() {
@@ -57,13 +56,5 @@ public class BillDetail {
 
     public void setTotal(double total) {
         this.total = total;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }
