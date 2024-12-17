@@ -1,6 +1,7 @@
 package com.example.book.repository;
 
 import com.example.book.models.Cart;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.relational.core.sql.In;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,8 +30,12 @@ public class CartReponsitory {
         return jdbcTemplate.queryForObject(sql, cartRowMapper, id);
     }
     public Cart findByUserId(Integer userId) {
-        String sql = "select * from cart where user_id=?";
-        return jdbcTemplate.queryForObject(sql, cartRowMapper, userId);
+        try {
+            String sql = "select * from cart where user_id=?";
+            return jdbcTemplate.queryForObject(sql, cartRowMapper, userId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;  // Nếu không tìm thấy bản ghi, trả về null
+        }
     }
     public int save(Cart cart) {
         String sql="insert into cart(user_id) values(?)";
