@@ -40,7 +40,7 @@ public class ProductReponsitory {
         return jdbcTemplate.update(sql,product.getId(),product.getProductName(),product.getProductAuthor(),product.getQuantity(),product.getPrice(),product.getProductImage(),product.getProductDescription(),product.getCategoryId());
     }
     public int updateProduct(Product product) {
-        String sql="update product set product_name=?, product_author=?, product_quantity=?, product_price=?, product_image=?, product_describe=?, category_id=? where id=?";
+        String sql="update product set product_name=?, product_author=?, product_quantity=?, product_price=?, product_image=?, product_describe=?, category_id=? where product_id=?";
         return jdbcTemplate.update(sql,product.getProductName(),product.getProductAuthor(),product.getQuantity(),product.getPrice(),product.getProductImage(),product.getProductDescription(),product.getCategoryId(),product.getId());
     }
     public int deleteProduct(Integer id) {
