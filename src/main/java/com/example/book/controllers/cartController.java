@@ -53,9 +53,9 @@ public class cartController {
         List<getCartRequest> listCartRequest = new ArrayList<>();
         if (cart == null) {
             // Tạo mới Cart nếu không tìm thấy
-            Cart newCart = new Cart();
-            newCart.setUserId(userId);
-            cartReponsitory.save(newCart);
+//            cart = new Cart();
+            cart.setUserId(userId);
+            cartReponsitory.save(cart);
             return new ResponseEntity<>(listCartRequest, HttpStatus.CREATED);
         } else {
             List<CartDetail> listCartDetail= cartDetailReponsitory.findByCartID(cart.getCartId());
