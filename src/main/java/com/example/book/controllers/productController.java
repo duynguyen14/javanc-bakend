@@ -61,4 +61,15 @@ public class productController {
         catalogDTO.setCatalog(catalog);
         return catalogDTO;
     }
+    @GetMapping("/search/{productName}")
+    List<Product> searchProductByProductName(@PathVariable String productName) {
+        if(productName==null || productName.length()==0) {
+            return new ArrayList<>();
+        }
+        else{
+            List<Product> productList = productReponsitory.findByName(productName);
+            return productList;
+        }
+
+    }
 }

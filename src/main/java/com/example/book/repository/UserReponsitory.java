@@ -61,4 +61,8 @@ public class UserReponsitory {
         Integer id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         user.setId(id);
     }
+    public Integer countUser(){
+        String sql="select count(*) from user u join account a on u.id=a.user_id where a.role= 'user'";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }

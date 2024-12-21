@@ -18,7 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/user")
 @CrossOrigin("*")
-public class userController {
+public class    userController {
     private final UserReponsitory userReponsitory;
     private final AccountReponsitory accountReponsitory;
     public userController(UserReponsitory userReponsitory,AccountReponsitory accountReponsitory) {
@@ -89,5 +89,22 @@ public class userController {
         }
     }
 //    @PatchMapping("/update/{id}")
+    @GetMapping("/count/{id}")
+    public ResponseEntity<?> count(@PathVariable Integer id) {
+        User user = userReponsitory.findById(id);
+        if(user!=null){
+            Account account = accountReponsitory.findById(user.getId());
+            if(account.getRole().equals("user")){
+                return new ResponseEntity<>("Bạn không có quyền truy cập ",HttpStatus.FORBIDDEN);
+            }
+            else{
+                Integer countUser= userReponsitory.countUser();
+                return new ResponseEntity<>(countUser,HttpStatus.OK);
+            }
+        }
+        else{
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
 
+    }
 }

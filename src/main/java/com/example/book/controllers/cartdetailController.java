@@ -36,9 +36,11 @@ public class cartdetailController {
     @PostMapping("/add/{id}")
     public ResponseEntity<String> AddProductToCart(@PathVariable Integer id, @RequestBody AddCartRequest addCartRequest) {
         try{
-//            System.out.println(addCartRequest.getQuantity());
+            System.out.println(addCartRequest.getQuantity());
+            System.out.println(addCartRequest.getProductId());
+            System.out.println("userID "+id);
             Cart cart = cartReponsitory.findByUserId(id);
-            System.out.println("cart: " + cart);
+//            System.out.println("cart: " + cart.getCartId());
             if(cart == null) {
                 cart = new Cart();
                 cart.setUserId(id);

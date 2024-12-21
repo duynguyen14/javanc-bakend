@@ -51,4 +51,8 @@ public class ProductReponsitory {
         String sql = "select * from product where category_id=?";
         return jdbcTemplate.query(sql, productRowMapper, categoryId);
     }
+    public List<Product> findByName(String productName) {
+        String sql = "select * from product where product_name like ?";
+        return jdbcTemplate.query(sql, productRowMapper, "%"+productName+"%");
+    }
 }
